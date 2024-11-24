@@ -143,6 +143,17 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      const howToPlayCollapsible = document.querySelector('#howToPlay');
+      const howToPlayButton = document.querySelectorAll('.collapsible')[1];
+
+      howToPlayButton.addEventListener('click', () => {
+        howToPlayButton.classList.toggle("active");
+        if (howToPlayCollapsible.style.display === "block") {
+          howToPlayCollapsible.style.display = "none";
+        } else {
+          howToPlayCollapsible.style.display = "block";
+        }
+      });
       const cardContainer = document.getElementById('cardContainer');
       const leaderboard = document.getElementById('leaderboard');
       const leaderboardList = document.getElementById('leaderboardList');
@@ -348,5 +359,17 @@
       });
     });
   </script>
+  <button class="collapsible">How to Play</button>
+  <div class="content" id="howToPlay">
+    <h2>How to Play Blank Slate</h2>
+    <p>Blank Slate is the clever party game from The Op Games where you try to predict what others are thinking. Each player writes down a word to complete a given phrase, aiming to match their answer with others.</p>
+    <h3>Scoring</h3>
+    <ul>
+      <li>For every pair of matching words, the players earn 3 points each.</li>
+      <li>Where more than 2 players have matching words, each player earns 1 point each.</li>
+      <li>Players with unmatched words earn no points at all.</li>
+    </ul>
+  </div>
+
 </body>
 </html>
