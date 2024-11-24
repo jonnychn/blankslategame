@@ -61,11 +61,56 @@
       padding: 10px;
       border-bottom: 1px solid #ccc;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+    }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 20px);
+      grid-gap: 5px;
+      margin-top: 10px;
+    }
+    .score-grid div {
+      width: 20px;
+      height: 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .score-grid div.scored {
+      background-color: #4caf50;
+    }
+    .collapsible {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      padding: 10px;
+      width: 80%;
+      max-width: 600px;
+      border: none;
+      text-align: center;
+      outline: none;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+    .collapsible:hover {
+      background-color: #0056b3;
+    }
+    .content {
+      display: none;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
     }
   </style>
 </head>
 <body>
+  <button class="collapsible">Leaderboard</button>
+  <div class="content leaderboard" id="leaderboard">
+    <h2>Leaderboard</h2>
+    <ul id="leaderboardList"></ul>
+  </div>
+
   <div id="playerSetup">
     <h2>Enter Player Names (Up to 8 Players)</h2>
     <div id="playerInputs">
@@ -85,11 +130,6 @@
     <!-- Cards will be dynamically generated here -->
   </div>
 
-  <div class="leaderboard" id="leaderboard" style="display: none;">
-    <h2>Leaderboard</h2>
-    <ul id="leaderboardList"></ul>
-  </div>
-
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const cardContainer = document.getElementById('cardContainer');
@@ -97,6 +137,7 @@
       const leaderboardList = document.getElementById('leaderboardList');
       const startGameButton = document.getElementById('startGame');
       const playerInputs = document.querySelectorAll('#playerInputs input');
+      const collapsible = document.querySelector('.collapsible');
       const blanks = [
         "Jack _____",
         "Happy _____",
@@ -245,11 +286,47 @@
         players.forEach(player => {
           const listItem = document.createElement('li');
           listItem.textContent = `${player}: ${scores[player]} points`;
+
+          const scoreGrid = document.createElement('div');
+          scoreGrid.classList.add('score-grid');
+
+          for (let i = 0; i < 25; i++) {
+            const scoreCell = document.createElement('div');
+            scoreCell.addEventListener('click', () => {
+              scoreCell.classList.toggle('scored');
+              scores[player] = document.querySelectorAll(`.score-grid div.scored`).length;
+              checkForWinner();
+            });
+            scoreGrid.appendChild(scoreCell);
+          }
+
+          listItem.appendChild(scoreGrid);
           leaderboardList.appendChild(listItem);
         });
       }
 
-      // TODO: Implement scoring logic and determine the end of the game
+      function checkForWinner() {
+        players.forEach(player => {
+          if (scores[player] >= 25) {
+            alert(`${player} has won the game!`);
+            resetGame();
+          }
+        });
+      }
+
+      function resetGame() {
+        location.reload();
+      }
+
+      collapsible.addEventListener('click', () => {
+        collapsible.classList.toggle("active");
+        const content = collapsible.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
     });
   </script>
 </body>
