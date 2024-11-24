@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blank Slate Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 10px;
+      width: 80%;
+      max-width: 1200px;
+      margin-top: 20px;
+    }
+    .card {
+      background-color: #ffffff;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .flipped {
+      background-color: #dff0d8;
+      border-color: #3c763d;
+    }
+    .leaderboard {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      width: 80%;
+      max-width: 600px;
+    }
+    .leaderboard h2 {
+      text-align: center;
+    }
+    .leaderboard ul {
+      list-style: none;
+      padding: 0;
+    }
+    .leaderboard li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div id="playerSetup">
+    <h2>Enter Player Names (Up to 8 Players)</h2>
+    <div id="playerInputs">
+      <input type="text" id="player1" placeholder="Player 1">
+      <input type="text" id="player2" placeholder="Player 2">
+      <input type="text" id="player3" placeholder="Player 3">
+      <input type="text" id="player4" placeholder="Player 4">
+      <input type="text" id="player5" placeholder="Player 5">
+      <input type="text" id="player6" placeholder="Player 6">
+      <input type="text" id="player7" placeholder="Player 7">
+      <input type="text" id="player8" placeholder="Player 8">
+    </div>
+    <button id="startGame">Start Game</button>
+  </div>
+
+  <div class="card-container" id="cardContainer" style="display: none;">
+    <!-- Cards will be dynamically generated here -->
+  </div>
+
+  <div class="leaderboard" id="leaderboard" style="display: none;">
+    <h2>Leaderboard</h2>
+    <ul id="leaderboardList"></ul>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cardContainer = document.getElementById('cardContainer');
+      const leaderboard = document.getElementById('leaderboard');
+      const leaderboardList = document.getElementById('leaderboardList');
+      const startGameButton = document.getElementById('startGame');
+      const playerInputs = document.querySelectorAll('#playerInputs input');
+      const blanks = [
+        "Jack _____",
+        "Happy _____",
+        "Sun _____",
+        "Mountain _____",
+        "Fast _____",
+        "Golden _____",
+        "Star _____",
+        "Running _____",
+        "Blue _____",
+        "Magic _____",
+        "Lucky _____",
+        "Jumping _____",
+        "Frozen _____",
+        "Silent _____",
+        "Brave _____",
+        "Silver _____",
+        "Cold _____",
+        "Night _____",
+        "Fire _____",
+        "Green _____",
+        "Smart _____",
+        "Dancing _____",
+        "Broken _____",
+        "Flying _____",
+        "Wild _____",
+        "Sweet _____",
+        "Dark _____",
+        "Quick _____",
+        "Bright _____",
+        "Soft _____",
+        "Sharp _____",
+        "Calm _____",
+        "Bold _____",
+        "Royal _____",
+        "Great _____",
+        "Thunder _____",
+        "Crystal _____",
+        "Happy _____",
+        "Dream _____",
+        "Iron _____",
+        "Secret _____",
+        "Burning _____",
+        "Cloudy _____",
+        "Gentle _____",
+        "Rock _____",
+        "Magic _____",
+        "Deep _____",
+        "Quiet _____",
+        "Crazy _____",
+        "Wind _____",
+        "Silver _____",
+        "Ocean _____",
+        "Sunny _____",
+        "Yellow _____",
+        "Tough _____",
+        "Rain _____",
+        "Strong _____",
+        "Red _____",
+        "Shadow _____",
+        "Light _____",
+        "Wild _____",
+        "New _____",
+        "Flying _____",
+        "Last _____",
+        "Iron _____",
+        "Sweet _____",
+        "Good _____",
+        "King _____",
+        "Snow _____",
+        "Sparkling _____",
+        "Moon _____",
+        "Steel _____",
+        "Silent _____",
+        "Lucky _____",
+        "Daring _____",
+        "Bright _____",
+        "Fire _____",
+        "Rising _____",
+        "Dark _____",
+        "Golden _____",
+        "Silver _____",
+        "Windy _____",
+        "Ice _____",
+        "Dashing _____",
+        "Royal _____",
+        "Shadow _____",
+        "Brave _____",
+        "Magic _____",
+        "Blue _____",
+        "Green _____",
+        "Mountain _____",
+        "Burning _____",
+        "Ocean _____",
+        "Shining _____",
+        "Yellow _____",
+        "Fast _____",
+        "Cold _____"
+      ];
+
+      let players = [];
+      let scores = {};
+
+      startGameButton.addEventListener('click', () => {
+        players = Array.from(playerInputs)
+          .map(input => input.value.trim())
+          .filter(name => name !== "");
+
+        if (players.length < 3) {
+          alert('Please enter at least 3 players.');
+          return;
+        }
+
+        players.forEach(player => {
+          scores[player] = 0;
+        });
+
+        document.getElementById('playerSetup').style.display = 'none';
+        cardContainer.style.display = 'grid';
+        leaderboard.style.display = 'block';
+        updateLeaderboard();
+        generateCards();
+      });
+
+      function generateCards() {
+        cardContainer.innerHTML = '';
+        const shuffledBlanks = blanks.sort(() => 0.5 - Math.random()).slice(0, 100);
+
+        shuffledBlanks.forEach((blank, index) => {
+          const card = document.createElement('div');
+          card.classList.add('card');
+          card.textContent = `Card ${index + 1}`;
+          card.dataset.blank = blank;
+
+          card.addEventListener('click', () => {
+            card.textContent = card.dataset.blank;
+            card.classList.add('flipped');
+          });
+
+          cardContainer.appendChild(card);
+        });
+      }
+
+      function updateLeaderboard() {
+        leaderboardList.innerHTML = '';
+        players.forEach(player => {
+          const listItem = document.createElement('li');
+          listItem.textContent = `${player}: ${scores[player]} points`;
+          leaderboardList.appendChild(listItem);
+        });
+      }
+
+      // TODO: Implement scoring logic and determine the end of the game
+    });
+  </script>
+</body>
+</html>
