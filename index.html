@@ -292,9 +292,14 @@
 
           for (let i = 0; i < 25; i++) {
             const scoreCell = document.createElement('div');
+            if (i < scores[player]) {
+              scoreCell.classList.add('scored');
+            }
             scoreCell.addEventListener('click', () => {
               scoreCell.classList.toggle('scored');
-              scores[player] = document.querySelectorAll(`.score-grid div.scored`).length;
+              scores[player] = document.querySelectorAll(`#leaderboardList li:nth-child(${players.indexOf(player) + 1}) .score-grid div.scored`).length;
+              listItem.textContent = `${player}: ${scores[player]} points`;
+              listItem.appendChild(scoreGrid);
               checkForWinner();
             });
             scoreGrid.appendChild(scoreCell);
