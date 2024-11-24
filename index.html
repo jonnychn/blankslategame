@@ -276,6 +276,9 @@
       function generateCards() {
         cardContainer.innerHTML = '';
         const shuffledBlanks = blanks.sort(() => 0.5 - Math.random()).slice(0, 100);
+        while (shuffledBlanks.length < 100) {
+          shuffledBlanks.push(blanks[Math.floor(Math.random() * blanks.length)]);
+        }
 
         shuffledBlanks.forEach((blank, index) => {
           const card = document.createElement('div');
