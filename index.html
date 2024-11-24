@@ -154,17 +154,6 @@
           howToPlayCollapsible.style.display = "block";
         }
       });
-      const howToPlayCollapsible = document.querySelector('#howToPlay');
-      const howToPlayButton = document.querySelectorAll('.collapsible')[1];
-
-      howToPlayButton.addEventListener('click', () => {
-        howToPlayButton.classList.toggle("active");
-        if (howToPlayCollapsible.style.display === "block") {
-          howToPlayCollapsible.style.display = "none";
-        } else {
-          howToPlayCollapsible.style.display = "block";
-        }
-      });
       const cardContainer = document.getElementById('cardContainer');
       const leaderboard = document.getElementById('leaderboard');
       const leaderboardList = document.getElementById('leaderboardList');
@@ -371,17 +360,7 @@
     });
   </script>
   <button class="collapsible">How to Play</button>
-  <div class="content" id="howToPlay">
-    <h2>How to Play Blank Slate</h2>
-    <h3>Using the Drawing Pad</h3>
-    <p>Instead of writing your words on a piece of paper, you can use the drawing pad at <a href="https://idrawsomething.vercel.app/" target="_blank">https://idrawsomething.vercel.app/</a> to draw your answers and fill in the blank. It's a fun and interactive way to participate!</p>
-    <h3>Scoring</h3>
-    <ul>
-      <li>For every pair of matching words, the players earn 3 points each.</li>
-      <li>Where more than 2 players have matching words, each player earns 1 point each.</li>
-      <li>Players with unmatched words earn no points at all.</li>
-    </ul>
-  </div>
+  
     <h3>Using the Drawing Pad</h3>
     <p>Instead of writing your words on a piece of paper, you can use the drawing pad at <a href="https://idrawsomething.vercel.app/" target="_blank">https://idrawsomething.vercel.app/</a> to draw your answers and fill in the blank. It's a fun and interactive way to participate!</p>
     <ul>
