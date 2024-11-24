@@ -8,12 +8,13 @@
   <script defer src="script.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
       background-color: #f0f0f0;
+      color: #333;
     }
     .card-container {
       display: grid;
@@ -36,6 +37,7 @@
     }
     .card:hover {
       transform: scale(1.05);
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .flipped {
       background-color: #dff0d8;
@@ -45,13 +47,16 @@
       margin-top: 20px;
       padding: 20px;
       background-color: #ffffff;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      width: 80%;
-      max-width: 600px;
+      border: 2px solid #007bff;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .leaderboard h2 {
       text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
     }
     .leaderboard ul {
       list-style: none;
@@ -59,22 +64,26 @@
     }
     .leaderboard li {
       padding: 10px;
-      border-bottom: 1px solid #ccc;
+      margin-bottom: 10px;
+      border-radius: 5px;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+      background-color: #f9f9f9;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
     }
     .score-grid {
       display: grid;
       grid-template-columns: repeat(25, 20px);
       grid-gap: 5px;
+      max-width: 600px;
     }
     .score-grid div {
       width: 20px;
       height: 20px;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
+      background-color: #e6e6e6;
+      border-radius: 3px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -85,14 +94,16 @@
       background-color: #007bff;
       color: white;
       cursor: pointer;
-      padding: 10px;
-      width: 80%;
-      max-width: 600px;
+      padding: 15px;
+      width: 90%;
+      max-width: 800px;
       border: none;
       text-align: center;
       outline: none;
-      font-size: 18px;
-      border-radius: 5px;
+      font-size: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .collapsible:hover {
       background-color: #0056b3;
